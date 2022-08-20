@@ -4,10 +4,10 @@ This module defines the objects for notifying the caller about the
 results of queries.
 """
 from result import QueryStatus
-from colorama import Fore, Style, init
+from colorama import Fore, Style
+globvar = 0 # global variable to count the number of results.
 
-
-class QueryNotify():
+class QueryNotify:
     """Query Notify Object.
 
     Base class that describes methods available to notify the results of
@@ -15,6 +15,7 @@ class QueryNotify():
     It is intended that other classes inherit from this base class and
     override the methods to implement specific functionality.
     """
+
     def __init__(self, result=None):
         """Create Query Notify Object.
 
@@ -32,7 +33,7 @@ class QueryNotify():
 
         self.result = result
 
-        return
+        # return
 
     def start(self, message=None):
         """Notify Start.
@@ -51,7 +52,7 @@ class QueryNotify():
         Nothing.
         """
 
-        return
+        # return   
 
     def update(self, result):
         """Notify Update.
@@ -70,7 +71,7 @@ class QueryNotify():
 
         self.result = result
 
-        return
+        # return
 
     def finish(self, message=None):
         """Notify Finish.
@@ -89,7 +90,7 @@ class QueryNotify():
         Nothing.
         """
 
-        return
+        # return
 
     def __str__(self):
         """Convert Object To String.
@@ -100,17 +101,15 @@ class QueryNotify():
         Return Value:
         Nicely formatted string to get information about this object.
         """
-        result = str(self.result)
-
-        return result
-
+        return str(self.result) 
 
 class QueryNotifyPrint(QueryNotify):
     """Query Notify Print Object.
 
     Query notify class that prints results.
     """
-    def __init__(self, result=None, verbose=False, color=True, print_all=False):
+
+    def __init__(self, result=None, verbose=False, print_all=False):
         """Create Query Notify Print Object.
 
         Contains information about a specific method of notifying the results
@@ -122,22 +121,17 @@ class QueryNotifyPrint(QueryNotify):
                                   results for this query.
         verbose                -- Boolean indicating whether to give verbose output.
         print_all              -- Boolean indicating whether to only print all sites, including not found.
-        color                  -- Boolean indicating whether to color terminal output
 
         Return Value:
         Nothing.
         """
 
-        # Colorama module's initialization.
-        init(autoreset=True)
-
         super().__init__(result)
         self.verbose = verbose
         self.print_all = print_all
-        self.color = color
 
         return
-
+     
     def start(self, message):
         """Notify Start.
 
@@ -153,17 +147,57 @@ class QueryNotifyPrint(QueryNotify):
         """
 
         title = "Checking username"
-        if self.color:
-            print(Style.BRIGHT + Fore.GREEN + "[" +
-                Fore.YELLOW + "*" +
-                Fore.GREEN + f"] {title}" +
-                Fore.WHITE + f" {message}" +
-                Fore.GREEN + " on:")
-        else:
-            print(f"[*] {title} {message} on:")
+
+        print(Style.BRIGHT + Fore.GREEN + "[" +
+              Fore.YELLOW + "*" +
+              Fore.GREEN + f"] {title}" +
+              Fore.WHITE + f" {message}" +
+              Fore.GREEN + " on:")
+        # An empty line between first line and the result(more clear output)
+        print('\r')
 
         return
 
+    def finish(self, message="The processing has been finished."):
+        """Notify Start.
+
+        Will print the last line to the standard output.
+
+        Keyword Arguments:
+        self                   -- This object.
+        message                -- The last phrase.
+
+        Return Value:
+        Nothing.
+        """
+
+        title = "End"
+        
+        print('\r') # An empty line between last line of main output and last line(more clear output)
+        print(Style.BRIGHT + Fore.GREEN + "[" +
+              Fore.YELLOW + "!" +
+              Fore.GREEN + f"] {title}" +
+              Fore.GREEN + ": " +
+              Fore.WHITE + f" {message}" )
+              
+        # An empty line between first line and the result(more clear output)
+
+        # return
+
+    def countResults(self):
+        """This function counts the number of results. Every time the fuction is called,
+        the number of results is increasing.
+
+        Keyword Arguments:
+        self                   -- This object.
+
+        Return Value:
+        The number of results by the time we call the function.
+        """
+        global globvar
+        globvar += 1
+        return globvar
+        
     def update(self, result):
         """Notify Update.
 
@@ -179,65 +213,85 @@ class QueryNotifyPrint(QueryNotify):
         """
         self.result = result
 
-        if self.verbose == False or self.result.query_time is None:
-            response_time_text = ""
-        else:
-            response_time_text = f" [{round(self.result.query_time * 1000)} ms]"
-
+        response_time_text = ""
+        if self.result.query_time is not None and self.verbose == True:
+            response_time_text = f" [{round(self.result.query_time * 1000)}ms]"
+        
         # Output to the terminal is desired.
         if result.status == QueryStatus.CLAIMED:
-            if self.color:
-                print((Style.BRIGHT + Fore.WHITE + "[" +
-                       Fore.GREEN + "+" +
-                       Fore.WHITE + "]" +
-                       response_time_text +
-                       Fore.GREEN +
-                       f" {self.result.site_name}: " +
-                       Style.RESET_ALL +
-                       f"{self.result.site_url_user}"))
-            else:
-                print(f"[+]{response_time_text} {self.result.site_name}: {self.result.site_url_user}")
+            self.countResults()
+            print(Style.BRIGHT + Fore.WHITE + "[" +
+                  Fore.GREEN + "+" +
+                  Fore.WHITE + "]" +
+                  response_time_text +
+                  Fore.GREEN +
+                  f" {self.result.site_name}: " +
+                  Style.RESET_ALL +
+                  f"{self.result.site_url_user}")       
 
         elif result.status == QueryStatus.AVAILABLE:
             if self.print_all:
-                if self.color:
-                    print((Style.BRIGHT + Fore.WHITE + "[" +
-                        Fore.RED + "-" +
-                        Fore.WHITE + "]" +
-                        response_time_text +
-                        Fore.GREEN + f" {self.result.site_name}:" +
-                        Fore.YELLOW + " Not Found!"))
-                else:
-                    print(f"[-]{response_time_text} {self.result.site_name}: Not Found!")
+                print(Style.BRIGHT + Fore.WHITE + "[" +
+                      Fore.RED + "-" +
+                      Fore.WHITE + "]" +
+                      response_time_text +
+                      Fore.GREEN + f" {self.result.site_name}:" +
+                      Fore.YELLOW + " Not Found!")
 
         elif result.status == QueryStatus.UNKNOWN:
             if self.print_all:
-                if self.color:
-                    print(Style.BRIGHT + Fore.WHITE + "[" +
-                          Fore.RED + "-" +
-                          Fore.WHITE + "]" +
-                          Fore.GREEN + f" {self.result.site_name}:" +
-                          Fore.RED + f" {self.result.context}" +
-                          Fore.YELLOW + f" ")
-                else:
-                    print(f"[-] {self.result.site_name}: {self.result.context} ")
+                print(Style.BRIGHT + Fore.WHITE + "[" +
+                      Fore.RED + "-" +
+                      Fore.WHITE + "]" +
+                      Fore.GREEN + f" {self.result.site_name}:" +
+                      Fore.RED + f" {self.result.context}" +
+                      Fore.YELLOW + f" ")
 
         elif result.status == QueryStatus.ILLEGAL:
             if self.print_all:
                 msg = "Illegal Username Format For This Site!"
-                if self.color:
-                    print((Style.BRIGHT + Fore.WHITE + "[" +
-                           Fore.RED + "-" +
-                           Fore.WHITE + "]" +
-                           Fore.GREEN + f" {self.result.site_name}:" +
-                           Fore.YELLOW + f" {msg}"))
-                else:
-                    print(f"[-] {self.result.site_name} {msg}")
+                print(Style.BRIGHT + Fore.WHITE + "[" +
+                      Fore.RED + "-" +
+                      Fore.WHITE + "]" +
+                      Fore.GREEN + f" {self.result.site_name}:" +
+                      Fore.YELLOW + f" {msg}")
 
         else:
             # It should be impossible to ever get here...
-            raise ValueError(f"Unknown Query Status '{str(result.status)}' for "
-                             f"site '{self.result.site_name}'")
+            raise ValueError(
+                f"Unknown Query Status '{result.status}' for site '{self.result.site_name}'"
+            )
+
+        return
+    
+    def finish(self, message="The processing has been finished."):
+        """Notify Start.
+        Will print the last line to the standard output.
+        Keyword Arguments:
+        self                   -- This object.
+        message                -- The 2 last phrases.
+        Return Value:
+        Nothing.
+        """
+        NumberOfResults = self.countResults() - 1
+
+        title = "Results:"
+
+        print(Style.BRIGHT + Fore.GREEN + "[" +
+              Fore.YELLOW + "*" +
+              Fore.GREEN + f"] {title}" +
+              Fore.WHITE + f" {NumberOfResults}" )
+        
+        title = "End"
+        
+        print('\r') # An empty line between last line of main output and last line(more clear output)
+        print(Style.BRIGHT + Fore.GREEN + "[" +
+              Fore.YELLOW + "!" +
+              Fore.GREEN + f"] {title}" +
+              Fore.GREEN + ": " +
+              Fore.WHITE + f" {message}" )
+              
+        # An empty line between first line and the result(more clear output)
 
         return
 
@@ -250,6 +304,4 @@ class QueryNotifyPrint(QueryNotify):
         Return Value:
         Nicely formatted string to get information about this object.
         """
-        result = str(self.result)
-
-        return result
+        return str(self.result)

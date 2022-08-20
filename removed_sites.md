@@ -421,24 +421,6 @@ Good-bye [Google Plus](https://en.wikipedia.org/wiki/Google%2B)...
 ```
 
 
-## Furaffinity
-
-As of 2020-02-23, Furaffinity returns false postives because they are now using Cloudflair, which prevents Sherlock from checking if the user
-exists or not.
-
-```
-  "furaffinity": {
-    "errorMsg": "user cannot be found",
-    "errorType": "message",
-    "rank": 0,
-    "url": "https://www.furaffinity.net/user/{}",
-    "urlMain": "https://www.furaffinity.net",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis777777"
-  },
-```
-
-
 ## InsaneJournal
 
 As of 2020-02-23, InsaneJournal returns false positive, when providing a username which contains a period.
@@ -747,21 +729,6 @@ future once we find a better error detecting method.
   },
 ```
 
-## Fiverr
-
-As of 2020-08-24, Fiverr now returns false positives, which was found when running the tests, but will most likley be added again in the near
-future once we find a better error detecting method.
-```
-  "Fiverr": {
-    "errorType": "response_url",
-    "errorUrl": "https://www.fiverr.com/",
-    "url": "https://www.fiverr.com/{}",
-    "urlMain": "https://www.fiverr.com/",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis"
-  },
-```
-
 ## ImageShack
 
 As of 2020-08-24, ImageShack now returns false positives, which was found when running the tests, but will most likley be added again in the near future once we find a better error detecting method.
@@ -1003,20 +970,6 @@ As of 2021-01-13, Badoo returns false positives
   },
 ```
 
-## Instagram
-As of 2021-01-13, Instagram returns false positives. This can be fixed by using their username checking API endpoint, but that requires a POST request which Sherlock currently does not support. 
-
-```
-  "Instagram": {
-    "errorMsg": "href=\"/static/bundles/metro/HttpErrorPage.js/",
-    "errorType": "message",
-    "url": "https://www.instagram.com/{}",
-    "urlMain": "https://www.instagram.com/",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis7"
-  },
-```
-
 ## Pling
 As of 2021-01-13, Pling returns false positives.
 ```
@@ -1051,20 +1004,6 @@ As of 2021-01-13, Travellerspoint returns false positives
     "errorType": "message",
     "url": "https://www.travellerspoint.com/users/{}",
     "urlMain": "https://www.travellerspoint.com",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis7"
-  },
-```
-
-## Ebay
-
-As of 2021-01-15, Ebay seems to be very laggy and take too long to return a response.
-```
-  "Ebay": {
-    "errorMsg": "<title>eBay Profile - error</title>",
-    "errorType": "message",
-    "url": "https://www.ebay.com/usr/{}",
-    "urlMain": "https://www.ebay.com/",
     "username_claimed": "blue",
     "username_unclaimed": "noonewouldeverusethis7"
   },
@@ -1202,35 +1141,6 @@ into this as YouTube is must have site in Sherlock.
   }
 ```
 
-## Twitter
-
-As of 2021-06-27, Twitter returns false positives. A solid solution has not been found yet but Twitter is temporarly removed. We will find a solution ASAP.
-```
-  "Twitter": {
-    "errorMsg": "This account doesn’t exist",
-    "errorType": "message",
-    "url": "https://twitter.com/{}",
-    "urlMain": "https://twitter.com/",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis7"
-  }
-```
-
-## AllMyLinks
-
-As of 2021-06-27, AllMyLinks has added a chapta using Cloudflare and this prevents us from checking for usernames.
-
-```
-  "allmylinks": {
-    "errorMsg": "Page not found",
-    "errorType": "message",
-    "url": "https://allmylinks.com/{}",
-    "urlMain": "https://allmylinks.com/",
-    "username_claimed": "blue",
-    "username_unclaimed": "noonewouldeverusethis7"
-  }
-```
-
 ### House Mixes
 
 As of 2021-09-04, House Mixes has issues connecting causing Sherlock to freeze.
@@ -1268,6 +1178,287 @@ As of 2021-09-04, SparkPeople returns false positives.
     "url": "https://www.sparkpeople.com/mypage.asp?id={}",
     "urlMain": "https://www.sparkpeople.com",
     "username_claimed": "adam",
+    "username_unclaimed": "noonewouldeverusethis7"
+  }
+```
+
+### Cloob
+As of 2021-10-25, Cloob seems to be down and their site is not responding.
+```
+  "Cloob": {
+    "errorType": "status_code",
+    "url": "https://www.cloob.com/name/{}",
+    "urlMain": "https://www.cloob.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  }
+```
+
+### 1337x
+As of 2021-11-21, 1337x seems to be down causing false positives.
+```
+  "1337x": {
+    "errorMsg": "Bad Username",
+    "errorType": "message",
+    "url": "https://1337x.to/user/{}/",
+    "urlMain": "https://1337x.to",
+    "username_claimed": "TheMorozko",
+    "username_unclaimed": "noonewouldeverusethis7"
+  }
+```
+
+### TM-Ladder
+As of 2021-11-30, TM-Ladder is returning false positives due to rate limits.
+
+```
+  "TM-Ladder": {
+    "errorMsg": "player unknown or invalid",
+    "errorType": "message",
+    "url": "http://en.tm-ladder.com/{}_rech.php",
+    "urlMain": "http://en.tm-ladder.com/index.php",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis"
+```
+
+### plug.dj
+As of 2021-12-02, plug.dj is returning false positives because the service is down.
+
+```
+  "plug.dj": {
+    "errorType": "status_code",
+    "url": "https://plug.dj/@/{}",
+    "urlMain": "https://plug.dj/",
+    "username_claimed": "plug-dj-rock",
+    "username_unclaimed": "noonewouldeverusethis7"
+  }
+```
+
+## Facenama
+
+As of 2022-02-6, Facenama seems to be down their rebuilding their site
+```
+  "Facenama": {
+    "errorType": "response_url",
+    "errorUrl": "https://facenama.com/404.html",
+    "regexCheck": "^[-a-zA-Z0-9_]+$",
+    "url": "https://facenama.com/{}",
+    "urlMain": "https://facenama.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis77"
+  },
+```
+
+
+## Designspiration
+
+As of 2022-04-17, Designspiration seems to be down or very laggy. Therefore, we're removing the site for now.
+
+```
+  "Designspiration": {
+    "errorType": "status_code",
+    "url": "https://www.designspiration.net/{}/",
+    "urlMain": "https://www.designspiration.net/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## CapFriendly
+
+As of 2022-05-01, CapFriendly always shows that a username exists even though it doesn't. This
+then of course causes false positives in Sherlock's results.
+
+```
+  "CapFriendly": {
+    "errorMsg": "<div class=\"err show p5\">No results found</div>",
+    "errorType": "message",
+    "regexCheck": "^[a-zA-z][a-zA-Z0-9_]{2,79}$",
+    "url": "https://www.capfriendly.com/users/{}",
+    "urlMain": "https://www.capfriendly.com/",
+    "username_claimed": "thisactuallyexists",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Gab
+
+As of 2022-05-01, Gab returns false positives because they now use CloudFlare
+```
+  "Gab": {
+    "errorMsg": "The page you are looking for isn't here.",
+    "errorType": "message",
+    "url": "https://gab.com/{}",
+    "urlMain": "https://gab.com",
+    "username_claimed": "a",
+    "username_unclaimed": "noonewouldeverusethis"
+  },
+```
+
+## Venmo
+
+As of 2022-05-01, Venmo returns false positives
+```
+  "Venmo": {
+    "errorMsg": "The profile you&#x27;re looking for isn&#x27;t available",
+    "errorType": "message",
+    "url": "https://venmo.com/u/{}",
+    "urlMain": "https://venmo.com/",
+    "username_claimed": "jenny",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## FanCentro
+
+As of 2022-05-1, FanCentro returns false positives. Will later in new version of Sherlock.
+
+```
+  "FanCentro": {
+    "errorMsg": "var environment",
+    "errorType": "message",
+    "url": "https://fancentro.com/{}",
+    "urlMain": "https://fancentro.com/",
+    "username_claimed": "nielsrosanna",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Codeforces
+As og 2022-05-01, Codeforces returns false positives
+```
+  "Codeforces": {
+    "errorType": "response_url",
+    "errorUrl": "https://codeforces.com/",
+    "url": "https://codeforces.com/profile/{}",
+    "urlMain": "https://www.codeforces.com/",
+    "username_claimed": "tourist",
+    "username_unclaimed": "noonewouldeverusethis789"
+  },
+```
+
+## Smashcast
+As og 2022-05-01, Smashcast is down
+```
+  "Smashcast": {
+    "errorType": "status_code",
+    "url": "https://www.smashcast.tv/api/media/live/{}",
+    "urlMain": "https://www.smashcast.tv/",
+    "username_claimed": "hello",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Countable
+
+As og 2022-05-01, Countable returns false positives 
+```
+  "Countable": {
+    "errorType": "status_code",
+    "url": "https://www.countable.us/{}",
+    "urlMain": "https://www.countable.us/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Spotify
+
+As og 2022-05-01, Spotify returns false positives
+```
+  "Spotify": {
+    "errorType": "status_code",
+    "url": "https://open.spotify.com/user/{}",
+    "urlMain": "https://open.spotify.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Steam
+
+As og 2022-05-01, Steam returns false positives
+```
+  "Steam": {
+    "errorMsg": "The specified profile could not be found",
+    "errorType": "message",
+    "url": "https://steamcommunity.com/id/{}",
+    "urlMain": "https://steamcommunity.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Raidforums
+
+Raidforums is now run by the FBI
+```
+  "Raidforums": {
+    "errorType": "status_code",
+    "url": "https://raidforums.com/User-{}",
+    "urlMain": "https://raidforums.com/",
+    "username_claimed": "red",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Pinterest
+Removed due to false positive
+
+```
+  "Pinterest": {
+    "errorType": "status_code",
+    "url": "https://www.pinterest.com/{}/",
+    "urlMain": "https://www.pinterest.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis76543"
+  }
+```
+
+## PCPartPicker
+As of 17-07-2022, PCPartPicker requires us to login in order to check if a user exits
+
+```
+  "PCPartPicker": {
+    "errorType": "status_code",
+    "url": "https://pcpartpicker.com/user/{}",
+    "urlMain": "https://pcpartpicker.com",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Ebay
+As of 17-07-2022, Ebay is very slow to respond. It was also reported that it returned false positives. So this is something that has been investigated further later.
+
+```
+  "eBay.com": {
+    "errorMsg": "The User ID you entered was not found. Please check the User ID and try again.",
+    "errorType": "message",
+    "url": "https://www.ebay.com/usr/{}",
+    "urlMain": "https://www.ebay.com/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+  "eBay.de": {
+    "errorMsg": "Der eingegebene Nutzername wurde nicht gefunden. Bitte pr\u00fcfen Sie den Nutzernamen und versuchen Sie es erneut.",
+    "errorType": "message",
+    "url": "https://www.ebay.de/usr/{}",
+    "urlMain": "https://www.ebay.de/",
+    "username_claimed": "blue",
+    "username_unclaimed": "noonewouldeverusethis7"
+  },
+```
+
+## Ghost
+As of 17-07-2022, Ghost returns false positives
+
+```
+  "Ghost": {
+    "errorMsg": "Domain Error",
+    "errorType": "message",
+    "url": "https://{}.ghost.io/",
+    "urlMain": "https://ghost.org/",
+    "username_claimed": "troyhunt",
     "username_unclaimed": "noonewouldeverusethis7"
   }
 ```
